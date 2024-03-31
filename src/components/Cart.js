@@ -1,11 +1,18 @@
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../UserContext.js';
 import { getUserCart, createNewCart, clearCart } from '../CartCRUD.js';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Table from 'react-bootstrap/Table';
 
-
-const Cart = () => {
+const Cart = ({ show, handleClose }) => {
     const userId = useContext(UserContext);
     const [cart, setCart] = useState(createNewCart(userId));
+
+    const onClickClear = () => {
+        clearCart();
+        setCart(createNewCart(userId));
+    }
 
     useEffect(() => {
         const retrieveCart = async () => {
@@ -13,34 +20,45 @@ const Cart = () => {
             setCart(userCart);
         }
         retrieveCart();
-    })
-    return <div>
-        <h3>Cart</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Total Price</th>
-                    <th>Discounted Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                {cart.products.filter((cartItem) => cartItem.id).map((cartItem) => {
-                    return <CartItem key={cartItem.id} item={cartItem} />
-                })}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th>${cart.total}</th>
-                    <th>${cart.discountedTotal}</th>
-                </tr>
-            </tfoot>
-        </table>
-        <button onClick={clearCart}>Clear Cart</button>
-    </div>
+    }, [show, userId])
+
+    return (
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Dialog>
+                <Modal.Header closeButton>
+                    <Modal.Title>Cart</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Table striped hover>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total Price</th>
+                                <th>Discounted Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cart.products.filter((cartItem) => cartItem.id).map((cartItem) => {
+                                return <CartItem key={cartItem.id} item={cartItem} />
+                            })}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>${cart.total}</th>
+                                <th>${cart.discountedTotal}</th>
+                            </tr>
+                        </tfoot>
+                    </Table>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={onClickClear}>Clear Cart</Button>
+                    <Button onClick={onClickClear}>Purchase</Button>
+                </Modal.Footer>
+            </Modal.Dialog>
+        </Modal>);
 }
 
 const CartItem = ({ item }) => {

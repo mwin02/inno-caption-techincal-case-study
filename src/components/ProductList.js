@@ -28,7 +28,7 @@ const Product = ({ product }) => {
     const onClickAdd = () => {
         console.log(`Added ${quantity} ${product.title} to cart`);
         const totalPrice = product.price * quantity;
-        const discountedPrice = (totalPrice * product.discountPercentage) / 100;
+        const discountedPrice = (totalPrice * (1 - product.discountPercentage / 100));
         const cartItem = createCartItem(product.id, product.title, product.price, quantity, totalPrice, product.discountPercentage, discountedPrice, product.thumbnail);
         addItemToCart(userId, cartItem);
         setQuantity(0);
