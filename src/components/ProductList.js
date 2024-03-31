@@ -1,5 +1,7 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import PlusMinusButton from "./PlusMinusButton"
+import { createCartItem, addItemToCart } from "../CartCRUD"
+import { UserContext } from "../UserContext"
 
 const ProductList = ({ products }) => {
     const productRows = products.map((product) => {
@@ -21,9 +23,14 @@ const ProductList = ({ products }) => {
 }
 
 const Product = ({ product }) => {
+    const userId = useContext(UserContext);
     const [quantity, setQuantity] = useState(0);
     const onClickAdd = () => {
         console.log(`Added ${quantity} ${product.title} to cart`);
+        const totalPrice = product.price * quantity;
+        const discountedPrice = (totalPrice * product.discountPercentage) / 100;
+        const cartItem = createCartItem(product.id, product.title, product.price, quantity, totalPrice, product.discountPercentage, discountedPrice, product.thumbnail);
+        addItemToCart(userId, cartItem);
         setQuantity(0);
     }
     return <tr>

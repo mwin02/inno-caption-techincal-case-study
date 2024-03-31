@@ -10,6 +10,10 @@ const createNewCart = (id) => {
     }
 }
 
+const createCartItem = (id, title, price, quantity, total, discountPercentage, discountedPrice, thumbnail) => {
+    return { id, title, price, quantity, total, discountPercentage, discountedPrice, thumbnail }
+}
+
 // Get Current Cart
 const getUserCart = async (userId) => {
     try {
@@ -48,15 +52,20 @@ const addToCart = (cart, newItem) => {
             discountedPrice: oldItem.discountedPrice + newItem.discountedPrice
         }
     } else {
-        cart.products.push({ newItem });
+        cart.products.push(newItem);
+        cart.totalProducts++;
     }
+    cart.total += newItem.total;
+    cart.totalQuantity += newItem.quantity;
+    cart.discountedTotal += newItem.discountedPrice;
     return cart;
 }
 
 // // Make an API call to add an object to the cart
 const addItemToCart = async (userId, newItem) => {
     try {
-        let oldCart = getUserCart(userId);
+        let oldCart = await getUserCart(userId);
+        console.log(oldCart);
         let newCart = addToCart(oldCart, newItem);
         // How I would update the backend if the API was functional
         /*
@@ -74,9 +83,15 @@ const addItemToCart = async (userId, newItem) => {
     }
 }
 
-// // Make an API call to edit an object in the cart
+// Make an API call to edit an object in the cart
 
 
-// // Make an API call to remove an object in the cart
+// Make an API call to remove an object in the cart
 
-export { createNewCart, getUserCart, addItemToCart }
+
+// Make an API call to clear the cart
+const clearCart = () => {
+    localStorage.removeItem('cart');
+}
+
+export { createNewCart, getUserCart, addItemToCart, createCartItem, clearCart }

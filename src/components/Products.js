@@ -11,7 +11,7 @@ function Products() {
         const retrieveProducts = async () => {
             try {
                 const skip = (pageNumber - 1) * itemPerPage;
-                const response = await fetch(`https://dummyjson.com/products?limit=${itemPerPage}&skip=${skip}&select=title,price`);
+                const response = await fetch(`https://dummyjson.com/products?limit=${itemPerPage}&skip=${skip}&select=title,price,discountPercentage,thumbnail`);
                 const json = await response.json();
                 setProducts(json.products);
                 setNumProducts(json.total);

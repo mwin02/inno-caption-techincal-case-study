@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../UserContext.js';
-import { getUserCart, createNewCart } from '../CartCRUD.js';
+import { getUserCart, createNewCart, clearCart } from '../CartCRUD.js';
 
 
 const Cart = () => {
@@ -13,7 +13,7 @@ const Cart = () => {
             setCart(userCart);
         }
         retrieveCart();
-    }, [userId])
+    })
     return <div>
         <h3>Cart</h3>
         <table>
@@ -26,7 +26,7 @@ const Cart = () => {
                 </tr>
             </thead>
             <tbody>
-                {cart.products.map((cartItem) => {
+                {cart.products.filter((cartItem) => cartItem.id).map((cartItem) => {
                     return <CartItem key={cartItem.id} item={cartItem} />
                 })}
             </tbody>
@@ -39,6 +39,7 @@ const Cart = () => {
                 </tr>
             </tfoot>
         </table>
+        <button onClick={clearCart}>Clear Cart</button>
     </div>
 }
 
