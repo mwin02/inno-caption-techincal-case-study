@@ -1,3 +1,5 @@
+import { Button, ButtonGroup } from "react-bootstrap";
+
 const PlusMinusButton = ({ number, setNumber }) => {
     const onButtonClick = (button) => {
         if (button === "-") {
@@ -9,11 +11,11 @@ const PlusMinusButton = ({ number, setNumber }) => {
         }
     }
     return (
-        <>
-            <button onClick={() => onButtonClick("-")}>-</button>
-            {number}
-            <button onClick={() => onButtonClick("+")}>+</button>
-        </>
+        <ButtonGroup>
+            <Button variant="outline-dark" onClick={() => onButtonClick("-")}>-</Button>
+            <Button disabled>{number}</Button>
+            <Button variant="outline-dark" onClick={() => onButtonClick("+")}>+</Button>
+        </ButtonGroup>
     );
 }
 

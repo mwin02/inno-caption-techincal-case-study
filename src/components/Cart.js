@@ -47,8 +47,8 @@ const Cart = ({ show, handleClose }) => {
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th>${cart.total}</th>
-                                <th>${cart.discountedTotal}</th>
+                                <th>${cart.total.toFixed(2)}</th>
+                                <th>${cart.discountedTotal.toFixed(2)}</th>
                             </tr>
                         </tfoot>
                     </Table>
@@ -65,8 +65,8 @@ const CartItem = ({ item }) => {
     return <tr>
         <th>{item.title}</th>
         <th>{item.quantity}</th>
-        <th>${item.total}</th>
-        <th>${item.discountedPrice}</th>
+        <th>${item.total.toFixed(2)}</th>
+        <th>${item.discountedPrice.toFixed(2)}</th>
     </tr>
 }
 export default Cart;

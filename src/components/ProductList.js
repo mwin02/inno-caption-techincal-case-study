@@ -2,14 +2,17 @@ import { useState, useContext } from "react"
 import PlusMinusButton from "./PlusMinusButton"
 import { createCartItem, addItemToCart } from "../CartCRUD"
 import { UserContext } from "../UserContext"
+import { Button, Table } from "react-bootstrap"
 
 const ProductList = ({ products }) => {
-    const productRows = products.map((product) => {
-        return <Product product={product} key={product.id} />
-    })
-    return <table>
+    if (!products) {
+        return <p>Error Loading the Products. Please Refresh the Page.</p>
+    }
+    const productRows = products.map((product) => <Product product={product} key={product.id} />)
+    return <Table>
         <thead>
             <tr>
+                <th></th>
                 <th></th>
                 <th>Name</th>
                 <th>Price</th>
@@ -19,7 +22,7 @@ const ProductList = ({ products }) => {
         <tbody>
             {productRows}
         </tbody>
-    </table>
+    </Table>
 }
 
 const Product = ({ product }) => {
@@ -34,12 +37,15 @@ const Product = ({ product }) => {
         setQuantity(0);
     }
     return <tr>
+        <td><img src={product.thumbnail} width="50" height="50" alt={product.title} /></td>
         <td>{product.id}</td>
         <td>{product.title}</td>
-        <td>{product.price}</td>
+        <td>${product.price}</td>
         <td>
             <PlusMinusButton number={quantity} setNumber={setQuantity} />
-            <button onClick={onClickAdd}>Add To Cart</button>
+        </td>
+        <td>
+            <Button onClick={onClickAdd}>Add To Cart</Button>
         </td>
     </tr>
 }
