@@ -65,16 +65,15 @@ const addToCart = (cart, newItem) => {
 const addItemToCart = async (userId, newItem) => {
     try {
         let oldCart = await getUserCart(userId);
-        console.log(oldCart);
         let newCart = addToCart(oldCart, newItem);
-        // How I would update the backend if the API was functional
-        /*
+        // How the backend would be updated if the API was functional
         const response = await fetch('https://dummyjson.com/products/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(oldCart)
         });
-        */
+        const json = await response.json();
+        console.log(json);
 
         // The cart will be updated and stored in local storage 
         localStorage.setItem('cart', JSON.stringify(newCart));
@@ -83,15 +82,38 @@ const addItemToCart = async (userId, newItem) => {
     }
 }
 
-// Make an API call to edit an object in the cart
-
-
-// Make an API call to remove an object in the cart
+// Make an API call to update a cart
+const updateCart = async (userId, newCart) => {
+    try {
+        const response = await fetch(`https://dummyjson.com/carts/${userId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                newCart
+            })
+        });
+        const json = await response.json();
+        console.log(json);
+        localStorage.setItem('cart', JSON.stringify(newCart));
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 
 // Make an API call to clear the cart
-const clearCart = () => {
-    localStorage.removeItem('cart');
+const clearCart = async (userId) => {
+    try {
+        const response = await fetch(`https://dummyjson.com/carts/${userId}`, {
+            method: 'DELETE',
+        });
+        const json = await response.json();
+        console.log(json);
+        localStorage.removeItem('cart');
+    } catch (e) {
+        console.log(e);
+    }
+
 }
 
-export { createNewCart, getUserCart, addItemToCart, createCartItem, clearCart }
+export { createNewCart, getUserCart, addItemToCart, createCartItem, clearCart, updateCart }

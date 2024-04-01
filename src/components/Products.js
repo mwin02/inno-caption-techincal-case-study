@@ -102,7 +102,11 @@ function Products() {
 
     let pageButtons = [];
     for (let i = 0; i < (numProducts / itemPerPage); i++) {
-        pageButtons.push(<Button variant="outline-primary" key={i} onClick={() => setPageNumber(i + 1)}>{i + 1}</Button>)
+        let buttonVariant = "outline-primary";
+        if (i + 1 === pageNumber) {
+            buttonVariant = "primary";
+        }
+        pageButtons.push(<Button variant={buttonVariant} key={i} onClick={() => setPageNumber(i + 1)}>{i + 1}</Button>)
     }
 
     return (

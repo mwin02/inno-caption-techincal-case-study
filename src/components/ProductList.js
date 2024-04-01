@@ -42,7 +42,7 @@ const Product = ({ product }) => {
         <td>{product.title}</td>
         <td>${product.price}</td>
         <td>
-            <PlusMinusButton number={quantity} setNumber={setQuantity} />
+            <PlusMinusButton number={quantity} onMinusClick={() => setQuantity(quantity - 1)} onPlusClick={() => setQuantity(quantity + 1)} />
         </td>
         <td>
             <Button onClick={onClickAdd}>Add To Cart</Button>
