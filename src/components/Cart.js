@@ -29,11 +29,11 @@ const Cart = ({ show, handleClose }) => {
         newCart.products[itemIndex].quantity = newQuantity;
         newCart.products[itemIndex].total = newQuantity * item.price;
         newCart.products[itemIndex].discountedPrice = (newQuantity * item.price * (1 - item.discountPercentage / 100))
-        console.log(newCart);
         setCart(newCart);
     }
 
     const onCartSave = async () => {
+        cart.products = cart.products.filter((item) => item.quantity > 0);
         updateCart(userId, cart);
     }
 
