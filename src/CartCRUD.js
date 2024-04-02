@@ -1,3 +1,4 @@
+// create a new empty cart with specified userid
 const createNewCart = (id) => {
     return {
         id: 21,
@@ -10,11 +11,12 @@ const createNewCart = (id) => {
     }
 }
 
+// helper function to create a cart with the given arguments
 const createCartItem = (id, title, price, quantity, total, discountPercentage, discountedPrice, thumbnail) => {
     return { id, title, price, quantity, total, discountPercentage, discountedPrice, thumbnail }
 }
 
-// Get Current Cart
+// Get the Current Cart
 const getUserCart = async (userId) => {
     try {
         // how I would retreive from the api if it was functional
@@ -41,6 +43,7 @@ const getUserCart = async (userId) => {
     }
 }
 
+// given a cart and a new item, add the item to the cart and update the cart's summary values
 const addToCart = (cart, newItem) => {
     let itemToAdd = cart.products.findIndex((item) => item.id === newItem.id);
     if (itemToAdd !== -1) {
@@ -61,7 +64,7 @@ const addToCart = (cart, newItem) => {
     return cart;
 }
 
-// // Make an API call to add an object to the cart
+// Make an API call to add an object to the cart
 const addItemToCart = async (userId, newItem) => {
     try {
         let oldCart = await getUserCart(userId);

@@ -3,6 +3,10 @@ import ProductList from './ProductList';
 import { Button, Row, Col, ButtonGroup } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
+/*
+The component responsible for retreiving and displaying the lists of products as well as paging them.
+*/
+
 function Products() {
     const [itemPerPage, setItemPerPage] = useState(10);
     const [pageNumber, setPageNumber] = useState(1);

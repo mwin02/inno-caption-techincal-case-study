@@ -4,7 +4,9 @@ import Cart from "../components/Cart";
 import { useState } from "react";
 import { Container } from "react-bootstrap";
 
-
+/*
+The Component representing the Home Page
+*/
 const Home = () => {
     const [show, setShow] = useState(false);
     const closeCart = () => {

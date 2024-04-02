@@ -4,6 +4,11 @@ import { createCartItem, addItemToCart } from "../CartCRUD"
 import { UserContext } from "../UserContext"
 import { Button, Table } from "react-bootstrap"
 
+/*
+A Component representing the list of products in table format
+@param products : the list of products to be displayed represented as an array of objects
+*/
+
 const ProductList = ({ products }) => {
     if (!products) {
         return <p>Error Loading the Products. Please Refresh the Page.</p>
@@ -25,6 +30,10 @@ const ProductList = ({ products }) => {
     </Table>
 }
 
+/*
+A component representing a single row in the ProductList component
+@param product : an object representing a single product
+*/
 const Product = ({ product }) => {
     const userId = useContext(UserContext);
     const [quantity, setQuantity] = useState(0);

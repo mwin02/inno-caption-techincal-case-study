@@ -6,6 +6,12 @@ import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import PlusMinusButton from './PlusMinusButton.js';
 
+/*
+Represents a Cart Modal Component
+@param show : a boolean determining whether the Cart Modal should be showed or not
+@param handleClose : a function that will be called when the Modal is exited from
+*/
+
 const Cart = ({ show, handleClose }) => {
     const userId = useContext(UserContext);
     const [cart, setCart] = useState(createNewCart(userId));
@@ -86,6 +92,12 @@ const Cart = ({ show, handleClose }) => {
         </Modal>
     );
 }
+
+/*
+Represents the component for an item in the cart
+@param item : an object containing the details of the item to be displayed
+@param onItemQuantityChange: a function that is called to change the quantity of the corresponding item
+*/
 
 const CartItem = ({ item, onItemQuantityChange }) => {
     return <tr>
